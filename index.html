@@ -219,7 +219,8 @@
                     <div class="flex-1 mt-48">
                         <h2 class="text-black text-xl font-bold pb-5">Select Your Seat</h2>
                         <p class="text-gray-400">
-                            -------------------------------------------------------------------------------------------------------</p>
+                            -------------------------------------------------------------------------------------------------------
+                        </p>
                         <div class="flex gap-[500px] pb-8">
                             <div class="flex">
                                 <img src="images/seat-gray.png" alt="">
@@ -281,10 +282,14 @@
                             <div class="flex items-center mb-4">
                                 <div class="px-4 py-2 rounded-l ">D</div>
                                 <div class="flex-1 flex justify-between">
-                                    <button id="D1" class="seat bg-gray-300 text-gray-500 font-bold px-6 py-2 rounded">D1</button>
-                                    <button id="D2" class="seat bg-gray-300 text-gray-500 font-bold px-6 py-2 rounded">D2</button>
-                                    <button id="D3"class="seat bg-gray-300 text-gray-500 font-bold px-6 py-2 rounded">D3</button>
-                                    <button id="D4" class="seat bg-gray-300 text-gray-500 font-bold px-6 py-2 rounded">D4</button>
+                                    <button id="D1"
+                                        class="seat bg-gray-300 text-gray-500 font-bold px-6 py-2 rounded">D1</button>
+                                    <button id="D2"
+                                        class="seat bg-gray-300 text-gray-500 font-bold px-6 py-2 rounded">D2</button>
+                                    <button id="D3"
+                                        class="seat bg-gray-300 text-gray-500 font-bold px-6 py-2 rounded">D3</button>
+                                    <button id="D4"
+                                        class="seat bg-gray-300 text-gray-500 font-bold px-6 py-2 rounded">D4</button>
                                 </div>
                             </div>
                             <!-- FIFTH row -->
@@ -384,7 +389,8 @@
                                 <div class="border-b border-gray-900/10 pb-12">
                                     <h2 class="text-black text-xl font-bold pb-5">Select Your Seat</h2>
                                     <p class="text-gray-400 pb-10">
-                                        ---------------------------------------------------------------------------------------</p>
+                                        ---------------------------------------------------------------------------------------
+                                    </p>
 
                                     <!-- ticket price section -->
                                     <div class="bg-gray-100 p-4 rounded-xl">
@@ -501,106 +507,106 @@
         </div>
     </section>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const buyTicketsBtn = document.getElementById('buyTicketsBtn');
-        const phParibahanSection = document.getElementById('phParibahanSection');
-        const seats = document.querySelectorAll('.seat');
-        const selectedSeatsContainer = document.getElementById('selected-seats');
-        const totalPriceContainer = document.getElementById('total-price');
-        const grandTotalContainer = document.getElementById('grand-total');
-        const applyCouponBtn = document.getElementById('apply-coupon');
-        const couponCodeInput = document.getElementById('coupon-code');
-        const nameInput = document.getElementById('nameInput');
-        const phoneInput = document.getElementById('phoneInput');
-        const emailInput = document.getElementById('emailInput');
-        const customBtn = document.querySelector('.custom-btn');
-    
-        let selectedSeats = [];
-        let totalTicketPrice = 0;
-    
-        buyTicketsBtn.addEventListener('click', function () {
-            phParibahanSection.scrollIntoView({ behavior: 'smooth' });
-        });
-    
-        seats.forEach(seat => {
-            seat.addEventListener('click', () => {
-                if (!seat.classList.contains('bg-[#1DD100]')) {
-                    if (selectedSeats.length < 4) {
-                        seat.style.backgroundColor = '#1DD100';
-                        seat.classList.toggle('text-white');
-                        const seatNumber = seat.textContent;
-                        if (selectedSeats.includes(seatNumber)) {
-                            selectedSeats = selectedSeats.filter(s => s !== seatNumber);
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const buyTicketsBtn = document.getElementById('buyTicketsBtn');
+            const phParibahanSection = document.getElementById('phParibahanSection');
+            const seats = document.querySelectorAll('.seat');
+            const selectedSeatsContainer = document.getElementById('selected-seats');
+            const totalPriceContainer = document.getElementById('total-price');
+            const grandTotalContainer = document.getElementById('grand-total');
+            const applyCouponBtn = document.getElementById('apply-coupon');
+            const couponCodeInput = document.getElementById('coupon-code');
+            const nameInput = document.getElementById('nameInput');
+            const phoneInput = document.getElementById('phoneInput');
+            const emailInput = document.getElementById('emailInput');
+            const customBtn = document.querySelector('.custom-btn');
+
+            let selectedSeats = [];
+            let totalTicketPrice = 0;
+
+            buyTicketsBtn.addEventListener('click', function () {
+                phParibahanSection.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            seats.forEach(seat => {
+                seat.addEventListener('click', () => {
+                    if (!seat.classList.contains('bg-[#1DD100]')) {
+                        if (selectedSeats.length < 4) {
+                            seat.style.backgroundColor = '#1DD100';
+                            seat.classList.toggle('text-white');
+                            const seatNumber = seat.textContent;
+                            if (selectedSeats.includes(seatNumber)) {
+                                selectedSeats = selectedSeats.filter(s => s !== seatNumber);
+                            } else {
+                                selectedSeats.push(seatNumber);
+                            }
+                            updateUI();
                         } else {
-                            selectedSeats.push(seatNumber);
+                            alert("You cannot book more than 4 seats.");
                         }
-                        updateUI();
-                    } else {
-                        alert("You cannot book more than 4 seats.");
                     }
+                });
+            });
+
+            function updateUI() {
+                updateSelectedSeats();
+                calculateTotalPrice();
+                updateAvailableSeats();
+            }
+
+            function updateSelectedSeats() {
+                selectedSeatsContainer.innerHTML = selectedSeats.length > 0 ?
+                    selectedSeats.map(seat => `<p>${seat}</p>`).join('') :
+                    '<p>No seats selected</p>';
+            }
+
+            function calculateTotalPrice() {
+                totalTicketPrice = selectedSeats.length * 550;
+                totalPriceContainer.textContent = `BDT${totalTicketPrice}`;
+                grandTotalContainer.textContent = `BDT${totalTicketPrice}`;
+            }
+
+            function updateAvailableSeats() {
+                const availableSeats = 40 - selectedSeats.length;
+                customBtn.textContent = `${availableSeats} seats left`;
+            }
+
+            applyCouponBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                const couponCode = couponCodeInput.value.trim();
+                let discount = 0;
+                if (couponCode === 'NEW15') {
+                    discount = totalTicketPrice * 0.15;
+                } else if (couponCode === 'COUPLE20') {
+                    discount = totalTicketPrice * 0.20;
+                } else {
+                    alert('Invalid Coupon Code');
+                    return;
                 }
+                grandTotalContainer.textContent = `BDT${totalTicketPrice - discount}`;
+            });
+
+            couponCodeInput.addEventListener('input', checkCouponValidity);
+
+            function checkCouponValidity() {
+                applyCouponBtn.disabled = !couponCodeInput.value.trim();
+            }
+
+            nameInput.addEventListener('input', function () {
+                this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
+            });
+
+            phoneInput.addEventListener('input', function () {
+                this.value = this.value.replace(/\D/g, '');
+            });
+
+            emailInput.addEventListener('input', function () {
+                this.value = this.value.replace('');
             });
         });
-    
-        function updateUI() {
-            updateSelectedSeats();
-            calculateTotalPrice();
-            updateAvailableSeats();
-        }
-    
-        function updateSelectedSeats() {
-            selectedSeatsContainer.innerHTML = selectedSeats.length > 0 ?
-                selectedSeats.map(seat => `<p>${seat}</p>`).join('') :
-                '<p>No seats selected</p>';
-        }
-    
-        function calculateTotalPrice() {
-            totalTicketPrice = selectedSeats.length * 550;
-            totalPriceContainer.textContent = `BDT${totalTicketPrice}`;
-            grandTotalContainer.textContent = `BDT${totalTicketPrice}`;
-        }
-    
-        function updateAvailableSeats() {
-            const availableSeats = 40 - selectedSeats.length;
-            customBtn.textContent = `${availableSeats} seats left`;
-        }
-    
-        applyCouponBtn.addEventListener('click', (event) => {
-            event.preventDefault();
-            const couponCode = couponCodeInput.value.trim();
-            let discount = 0;
-            if (couponCode === 'NEW15') {
-                discount = totalTicketPrice * 0.15;
-            } else if (couponCode === 'COUPLE20') {
-                discount = totalTicketPrice * 0.20;
-            } else {
-                alert('Invalid Coupon Code');
-                return;
-            }
-            grandTotalContainer.textContent = `BDT${totalTicketPrice - discount}`;
-        });
-    
-        couponCodeInput.addEventListener('input', checkCouponValidity);
-    
-        function checkCouponValidity() {
-            applyCouponBtn.disabled = !couponCodeInput.value.trim();
-        }
-    
-        nameInput.addEventListener('input', function () {
-            this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
-        });
-    
-        phoneInput.addEventListener('input', function () {
-            this.value = this.value.replace(/\D/g, '');
-        });
-    
-        emailInput.addEventListener('input', function () {
-            this.value = this.value.replace( '');
-        });
-    });
     </script>
-    
+
 
 </body>
 
